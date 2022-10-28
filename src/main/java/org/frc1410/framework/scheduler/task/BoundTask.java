@@ -1,6 +1,8 @@
 package org.frc1410.framework.scheduler.task;
 
 import org.frc1410.framework.scheduler.loop.Loop;
+import org.frc1410.framework.scheduler.task.lock.TaskLock;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a task that is bound to a loop and being actively
@@ -18,7 +20,7 @@ public class BoundTask {
     public final Observer observer;
 
 
-    public BoundTask(Task task, TaskPersistence persistence, Observer observer) {
+    public BoundTask(Task task, TaskPersistence persistence, Observer observer, @Nullable TaskLock lock) {
         this.job = task;
         this.persistence = persistence;
         this.observer = observer;
