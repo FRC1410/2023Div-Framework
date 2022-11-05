@@ -1,6 +1,5 @@
 package org.frc1410.framework.scheduler.subsystem;
 
-import org.frc1410.framework.scheduler.task.lock.TaskLock;
+public interface Subsystem {
 
-public interface Subsystem extends TaskLock {
 }

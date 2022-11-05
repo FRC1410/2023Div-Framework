@@ -2,6 +2,7 @@ package org.frc1410.framework.scheduler.task;
 
 import org.frc1410.framework.scheduler.loop.Loop;
 import org.frc1410.framework.scheduler.task.lock.TaskLock;
+import org.frc1410.framework.scheduler.task.observer.Observer;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -18,11 +19,12 @@ public class BoundTask {
     public final Task job;
     public final TaskPersistence persistence;
     public final Observer observer;
-
+    public final TaskLock lock;
 
     public BoundTask(Task task, TaskPersistence persistence, Observer observer, @Nullable TaskLock lock) {
         this.job = task;
         this.persistence = persistence;
         this.observer = observer;
+        this.lock = lock;
     }
 }

@@ -4,8 +4,11 @@ import org.frc1410.framework.scheduler.task.BoundTask;
 import org.frc1410.framework.scheduler.task.LifecycleHandler;
 import org.frc1410.framework.scheduler.task.Task;
 import org.frc1410.framework.scheduler.task.TaskState;
+import org.frc1410.framework.scheduler.task.lock.LockHandler;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -21,8 +24,10 @@ import java.util.Set;
  */
 public class Loop {
 
-    private final long period;
     private final Set<BoundTask> tasks = new HashSet<>();
+    private final LockHandler lockHandler = new LockHandler();
+    private final long period;
+
 
     Loop(long period) {
         this.period = period;
@@ -41,11 +46,15 @@ public class Loop {
     }
 
     public void tick() {
-        tasks.forEach(Loop::process);
+        tasks.forEach(this::process);
     }
 
-    private static void process(BoundTask task) {
-        task.observer.tick();
+    private void process(BoundTask task) {
+        if (!lockHandler.ownsLock(task)) {
+            return;
+        }
+
+        task.observer.tick(task.lifecycle);
 
         Task job = task.job;
         LifecycleHandler lifecycle = task.lifecycle;
@@ -66,11 +75,15 @@ public class Loop {
             case FLAGGED_COMPLETION -> {
                 job.end(false);
                 lifecycle.state = TaskState.ENDED;
+
+                lockHandler.releaseLock(task);
             }
 
             case FLAGGED_INTERRUPTION -> {
                 job.end(true);
                 lifecycle.state = TaskState.ENDED;
+
+                lockHandler.releaseLock(task);
             }
         }
     }

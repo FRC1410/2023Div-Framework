@@ -13,7 +13,7 @@ public class ButtonBinding {
         this.button = button;
     }
 
-    public void whileHeld(Task task) {
-
+    public boolean isPressed() {
+        return controller.getRawButton(button.id);
     }
 }

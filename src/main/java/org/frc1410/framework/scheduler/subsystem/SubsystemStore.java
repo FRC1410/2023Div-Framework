@@ -12,5 +12,5 @@ public class SubsystemStore {
         subsystems.add(subsystem);
     }
 
-    public void track()
+    public void track() {}
 }

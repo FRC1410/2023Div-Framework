@@ -1,11 +1,8 @@
-package org.frc1410.framework.scheduler;
+package org.frc1410.framework.scheduler.task;
 
 import org.frc1410.framework.scheduler.loop.Loop;
 import org.frc1410.framework.scheduler.loop.LoopStore;
-import org.frc1410.framework.scheduler.task.BoundTask;
-import org.frc1410.framework.scheduler.task.Observer;
-import org.frc1410.framework.scheduler.task.Task;
-import org.frc1410.framework.scheduler.task.TaskPersistence;
+import org.frc1410.framework.scheduler.task.observer.Observer;
 
 public class TaskScheduler {
 
