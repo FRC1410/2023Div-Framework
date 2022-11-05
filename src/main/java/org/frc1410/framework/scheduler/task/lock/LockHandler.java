@@ -17,6 +17,20 @@ public class LockHandler {
 
     private final Map<Object, BoundTask> locks = new HashMap<>();
 
+    /**
+     * Checks if a lock is owned by the given task. Has the additional
+     * effect of giving ownership of the lock key to the provided task
+     * if none is assigned.
+     *
+     * <p>When a task has prior claim over a lock key but is of lower
+     * priority than the given task, access to the lock is handed to
+     * the new task.
+     *
+     * @param task The task to check
+     *
+     * @return {@code true} if the provided task owns the
+     *         lock.
+     */
     public boolean ownsLock(BoundTask task) {
         if (task.lock == null) return true;
 
