@@ -2,8 +2,8 @@ package org.frc1410.framework.scheduler.task.lock;
 
 import org.frc1410.framework.scheduler.task.BoundTask;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
 * Developers will often encounter an issue where two commands (which are backed by tasks internally)
@@ -15,7 +15,7 @@ import java.util.Map;
 */
 public class LockHandler {
 
-    private final Map<Object, BoundTask> locks = new HashMap<>();
+    private final Map<Object, BoundTask> locks = new ConcurrentHashMap<>();
 
     /**
      * Checks if a lock is owned by the given task. Has the additional
